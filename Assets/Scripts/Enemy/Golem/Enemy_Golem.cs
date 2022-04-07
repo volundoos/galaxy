@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy_Golem : MonoBehaviour
 {
@@ -11,10 +12,34 @@ public class Enemy_Golem : MonoBehaviour
     private Transform target;
     private int wavepointIndex = 0;
 
+    public int health = 1000;
+    public int score = 50;
+    public int gold = 20;
+
     private void Start()
     {
         target = Waypoints.waypoints[0];
 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+
+        if (health <= 0)
+        {
+            Die();
+            GameObject playerStat = GameObject.Find("PlayerStat");
+            ScoreManagement sc = playerStat.GetComponent<ScoreManagement>();
+            GoldManager gm = playerStat.GetComponent<GoldManager>();
+            sc.getScore(score);
+            gm.getGold(gold);
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);       
     }
 
     private void Update()
