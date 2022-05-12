@@ -7,9 +7,11 @@ public class WaveSpawner : MonoBehaviour
 {
     public Transform golem;
     public Transform minion;
+    public Transform fly;
 
     public Transform golemSpawnPoint;
     public Transform minionSpawnPoint;
+    public Transform flySpawnPoint;
 
     public float timeBetweenWaves = 5f;
     private float countdown = 5.5f;
@@ -44,5 +46,6 @@ public class WaveSpawner : MonoBehaviour
     {
         Instantiate(golem, golemSpawnPoint.position, golemSpawnPoint.rotation);
         Instantiate(minion, minionSpawnPoint.position, minionSpawnPoint.rotation);
+        Instantiate(fly, flySpawnPoint.position, flySpawnPoint.rotation);
     }
 }

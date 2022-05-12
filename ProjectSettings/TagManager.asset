@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - BuildablePlace
   - Station
+  - Fly
+  - Turret
   layers:
   - Default
   - TransparentFX

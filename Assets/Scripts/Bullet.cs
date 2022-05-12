@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour
         Damage(target);
         Debug.Log("Collided");
     }
-
+    
     void Damage(Transform enemy)
     {
         Enemy_Minion e = enemy.GetComponent<Enemy_Minion>();
