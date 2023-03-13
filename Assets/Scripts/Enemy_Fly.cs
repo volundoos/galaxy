@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy_Fly : MonoBehaviour
 {
@@ -10,9 +12,11 @@ public class Enemy_Fly : MonoBehaviour
     private Transform target;
     private int wavepointIndex = 0;
 
-    public int health = 1000;
+    public int health = 800;
     public int score = 50;
     public int gold = 20;
+
+    public LivesOfFly livesOfFly;
 
     void Start()
     {
@@ -24,20 +28,24 @@ public class Enemy_Fly : MonoBehaviour
     {
         health -= amount;
 
+        livesOfFly.SetLivesOfFly(health);
+
         if (health <= 0)
         {
             Die();
-            GameObject playerStat = GameObject.Find("PlayerStat");
-            ScoreManagement sc = playerStat.GetComponent<ScoreManagement>();
-            GoldManager gm = playerStat.GetComponent<GoldManager>();
-            sc.getScore(score);
-            gm.getGold(gold);
+            
         }
     }
 
     void Die()
     {
         Destroy(gameObject);
+        GameObject playerStat = GameObject.Find("PlayerStat");
+        ScoreManagement sc = playerStat.GetComponent<ScoreManagement>();
+        GoldManager gm = playerStat.GetComponent<GoldManager>();
+        sc.getScore(score);
+        gm.getGold(gold);
+        WaveSpawner.EnemiesAlive--;
     }
 
     private void Update()
@@ -59,6 +67,7 @@ public class Enemy_Fly : MonoBehaviour
         if (wavepointIndex >= Waypoints_fly.waypoints_fly.Length - 1)
         {
             Destroy(gameObject);
+            WaveSpawner.EnemiesAlive--;
             return;
         }
 

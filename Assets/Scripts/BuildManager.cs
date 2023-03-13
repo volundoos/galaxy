@@ -16,22 +16,27 @@ public class BuildManager : MonoBehaviour
     public TurretData Turret1Data;
     public TurretData Turret2Data;
     public TurretData Turret3Data;
-    
-      
+    public TurretData Turret4Data;
+    public TurretData Turret5Data;
+    public TurretData Turret6Data;
+
+
     public TurretData SelectedTurretData;
 
     [SerializeField] private string buildablePlace = "BuildablePlace";
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private Material defaultMaterial;
 
-    [SerializeField] private Toggle toggleRoundTurret, toggleRectTurret;
+    [SerializeField] private Toggle sky1,sky2,sky3,ground1,ground2,ground3;
 
     private Transform _selection;
 
+    public Text gold;
+    public GameObject playerStat;
 
     private void ChangeInvisible(bool arg0)
     {
-       if(toggleRoundTurret.isOn || toggleRectTurret.isOn)
+       if(sky1.isOn || sky2.isOn || sky3.isOn || ground1.isOn || ground2.isOn || ground3.isOn)
         {
             HideUI();
         }
@@ -48,12 +53,20 @@ public class BuildManager : MonoBehaviour
     {
         shopUIisOpen = false;
         shopUI.SetActive(false);
-        toggleRoundTurret.onValueChanged.AddListener(ChangeInvisible);
-        toggleRectTurret.onValueChanged.AddListener(ChangeInvisible);
+        sky1.onValueChanged.AddListener(ChangeInvisible);
+        sky2.onValueChanged.AddListener(ChangeInvisible);
+        sky3.onValueChanged.AddListener(ChangeInvisible);
+        ground1.onValueChanged.AddListener(ChangeInvisible);
+        ground2.onValueChanged.AddListener(ChangeInvisible);
+        ground3.onValueChanged.AddListener(ChangeInvisible);
+
     }
     void Update()
     {
-        if(_selection != null)
+        string goldString = gold.text.ToString();
+        int.TryParse(goldString, out int goldNumber);
+
+        if (_selection != null)
         {
             var selectionRenderer = _selection.GetComponent<Renderer>();
             selectionRenderer.material = defaultMaterial;
@@ -83,8 +96,17 @@ public class BuildManager : MonoBehaviour
 
                         MapCube mapCube = hit.collider.GetComponent<MapCube>();
                         if (Input.GetMouseButtonDown(0))
+                        {if (goldNumber >= SelectedTurretData.cost)
                         {
-                        mapCube.BuildTurret(SelectedTurretData.turretPrefab);
+                            mapCube.BuildTurret(SelectedTurretData.turretPrefab);
+                            GoldManager goldManager = playerStat.GetComponent<GoldManager>();
+                            goldManager.getGold(-SelectedTurretData.cost);
+                        }
+                        else
+                        {
+                            Debug.Log("not enough money");
+                            mapCube.Show();
+                        }
                         }
                     }                
                 }
@@ -106,4 +128,35 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    public void OnTurret3Selected(bool isOn)
+    {
+        if (isOn)
+        {
+            SelectedTurretData = Turret3Data;
+        }
+    }
+
+    public void OnTurret4Selected(bool isOn)
+    {
+        if (isOn)
+        {
+            SelectedTurretData = Turret4Data;
+        }
+    }
+
+    public void OnTurret5Selected(bool isOn)
+    {
+        if (isOn)
+        {
+            SelectedTurretData = Turret5Data;
+        }
+    }
+
+    public void OnTurret6Selected(bool isOn)
+    {
+        if (isOn)
+        {
+            SelectedTurretData = Turret6Data;
+        }
+    }
 }

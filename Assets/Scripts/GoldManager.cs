@@ -9,7 +9,7 @@ public class GoldManager : MonoBehaviour
     public int goldGot;
     void Start()
     {
-        goldGot = 200;
+        goldGot = 1000;
     }
 
     public void getGold(int number)

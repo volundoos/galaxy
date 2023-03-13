@@ -65,5 +65,11 @@ public class Bullet : MonoBehaviour
         {
             eG.TakeDamage(damage);
         }
+
+        Enemy_Fly eF = enemy.GetComponent<Enemy_Fly>();
+        if (eF != null)
+        {
+            eF.TakeDamage(damage);
+        }
     }
 }

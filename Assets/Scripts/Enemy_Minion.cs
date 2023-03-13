@@ -16,6 +16,7 @@ public class Enemy_Minion : MonoBehaviour
     public int score = 20;
     public int gold = 10;
 
+    public LivesOfMinion livesOfMinion;
     private void Start()
     {
         target = Waypoints_minion.waypoints_minion[0];
@@ -24,6 +25,7 @@ public class Enemy_Minion : MonoBehaviour
     public void TakeDamage(int amount)
     {
         health -= amount;
+        livesOfMinion.SetLivesOfMinion(health);
 
         if(health <= 0)
         {
@@ -39,6 +41,7 @@ public class Enemy_Minion : MonoBehaviour
         GoldManager gm = playerStat.GetComponent<GoldManager>();
         sc.getScore(score);
         gm.getGold(gold);
+        WaveSpawner.EnemiesAlive--;
     }
 
     private void Update()
@@ -61,6 +64,7 @@ public class Enemy_Minion : MonoBehaviour
         if (wavepointIndex >= Waypoints_minion.waypoints_minion.Length - 1)
         {
             Destroy(gameObject);
+            WaveSpawner.EnemiesAlive--;
             return;
         }
 

@@ -12,9 +12,11 @@ public class Enemy_Golem : MonoBehaviour
     private Transform target;
     private int wavepointIndex = 0;
 
-    public int health = 1000;
+    public int health = 1400;
     public int score = 50;
     public int gold = 20;
+
+    public LivesOfGolem livesOfGolem;
 
     private void Start()
     {
@@ -25,21 +27,23 @@ public class Enemy_Golem : MonoBehaviour
     public void TakeDamage(int amount)
     {
         health -= amount;
+        livesOfGolem.SetLivesOfGolem(health);
 
         if (health <= 0)
         {
             Die();
-            GameObject playerStat = GameObject.Find("PlayerStat");
-            ScoreManagement sc = playerStat.GetComponent<ScoreManagement>();
-            GoldManager gm = playerStat.GetComponent<GoldManager>();
-            sc.getScore(score);
-            gm.getGold(gold);
         }
     }
 
     void Die()
     {
-        Destroy(gameObject);       
+        Destroy(gameObject);
+        GameObject playerStat = GameObject.Find("PlayerStat");
+        ScoreManagement sc = playerStat.GetComponent<ScoreManagement>();
+        GoldManager gm = playerStat.GetComponent<GoldManager>();
+        sc.getScore(score);
+        gm.getGold(gold);
+        WaveSpawner.EnemiesAlive--;
     }
 
     private void Update()
@@ -61,6 +65,7 @@ public class Enemy_Golem : MonoBehaviour
         if(wavepointIndex >= Waypoints.waypoints.Length - 1)
         {
             Destroy(gameObject);
+            WaveSpawner.EnemiesAlive--;
             return;
         }
 

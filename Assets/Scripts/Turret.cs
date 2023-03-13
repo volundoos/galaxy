@@ -85,8 +85,8 @@ public class Turret : MonoBehaviour
         GameObject bulletGo1 = (GameObject)Instantiate(bulletPrefab, firePoint1.position, firePoint1.rotation);
         GameObject bulletGo2 = (GameObject)Instantiate(bulletPrefab, firePoint2.position, firePoint2.rotation);
 
-        Bullet bullet1 = bulletGo1.GetComponent<Bullet>();
-        Bullet bullet2 = bulletGo2.GetComponent<Bullet>();
+        FifDmgBullet bullet1 = bulletGo1.GetComponent<FifDmgBullet>();
+        FifDmgBullet bullet2 = bulletGo2.GetComponent<FifDmgBullet>();
 
         if(bullet1 != null)
         {

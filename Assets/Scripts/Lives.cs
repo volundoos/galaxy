@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class Lives : MonoBehaviour
 {
     public Text lives;
+    public GameObject gameOverUi;
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Enemy")
@@ -17,7 +19,8 @@ public class Lives : MonoBehaviour
             if(lives.text.ToString() == "0")
             {
                 Debug.Log("Game Ended");
-                SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+                gameOverUi.SetActive(true);
+                Time.timeScale = 0;
             }
         }
     }

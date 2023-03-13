@@ -14,5 +14,9 @@ public class TurretData
 public enum TurretType
 {
     Turret1,
-    Turret2
+    Turret2,
+    Turret3,
+    Turret4,
+    Turret5,
+    Turret6
 }
